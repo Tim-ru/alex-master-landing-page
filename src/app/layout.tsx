@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import { AppShell } from "@/components/layout/app-shell";
 import { YandexMetrica } from "@/components/yandex-metrica";
 import "./globals.css";
@@ -7,6 +7,13 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-inter",
+  display: "swap"
+});
+
+const manrope = Manrope({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-manrope",
+  weight: ["600", "700", "800"],
   display: "swap"
 });
 
@@ -37,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={inter.variable}>
+    <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
       <AppShell>{children}</AppShell>
       <YandexMetrica />
     </html>

@@ -7,5 +7,9 @@ type EyebrowProps = {
 };
 
 export function Eyebrow({ children, className }: EyebrowProps) {
-  return <p className={cn("text-sm font-medium text-teal-700", className)}>{children}</p>;
+  return (
+    <p className={cn("text-xs font-semibold uppercase tracking-widest text-copper-600", className)}>
+      {children}
+    </p>
+  );
 }

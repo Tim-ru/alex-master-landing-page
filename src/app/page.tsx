@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { LeadForm } from "@/components/lead-form";
 import { localBusinessSchema } from "@/lib/structured-data";
 import { brands, commonFaq, reviews, symptoms } from "@/content";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
@@ -17,6 +19,13 @@ export const metadata: Metadata = {
     description: "Диагностика в день обращения, точная смета до начала работ, гарантия на ремонт."
   }
 };
+
+const trustItems = [
+  "Диагностика в день обращения",
+  "Ремонт на дому — без вывоза",
+  "Смета до начала работ",
+  "Гарантия на все работы",
+];
 
 const advantages = [
   { num: "01", title: "Диагностика в день обращения", desc: "Приедем и проверим в удобное вам время" },
@@ -53,77 +62,99 @@ export default function HomePage() {
       />
 
       {/* Hero */}
-      <Section className="bg-zinc-50">
-        <div className="max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 ring-1 ring-inset ring-teal-600/10">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden="true" />
-            Принимаем заявки ежедневно с 9:00 до 21:00
-          </div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
-            Ремонт стиральных машин на дому
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-zinc-500">
-            Диагностика в день обращения, точная смета до начала работ, гарантия на ремонт.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/contacts">Вызвать мастера</Button>
-            <Button href="/prices" variant="secondary">
-              Цены
-            </Button>
-          </div>
-        </div>
-      </Section>
-
-      {/* Преимущества */}
-      <Section>
-        <Eyebrow>Преимущества</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Почему выбирают нас</h2>
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {advantages.map((item) => (
-            <div key={item.title}>
-              <p className="text-4xl font-bold tracking-tight text-teal-600/30">{item.num}</p>
-              <p className="mt-3 text-sm font-semibold text-zinc-950">{item.title}</p>
-              <p className="mt-1.5 text-sm leading-6 text-zinc-500">{item.desc}</p>
+      <section className="bg-forest-950">
+        <Container className="grid grid-cols-1 gap-10 py-16 lg:grid-cols-[1fr_440px] lg:items-center lg:gap-16 lg:py-24 xl:py-28">
+          {/* Left */}
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(201,120,59,0.3)] bg-[rgba(201,120,59,0.08)] px-3 py-1 text-xs font-medium text-copper-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-copper-600" aria-hidden="true" />
+              Санкт-Петербург · Ежедневно с 9:00 до 21:00
             </div>
-          ))}
-        </div>
-      </Section>
 
-      {/* Как мы работаем */}
-      <Section className="bg-zinc-50">
-        <Eyebrow>Процесс</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Как мы работаем</h2>
-        <div className="relative mt-10">
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-4 top-4 hidden border-t border-dashed border-zinc-300 lg:block"
-          />
-          <ol className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((step, i) => (
-              <li key={step.title}>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-950 text-xs font-semibold text-white ring-4 ring-zinc-50">
-                  {i + 1}
-                </div>
-                <p className="mt-4 text-sm font-semibold text-zinc-950">{step.title}</p>
-                <p className="mt-1.5 text-sm leading-6 text-zinc-500">{step.desc}</p>
-              </li>
+            <h1 className="mt-5 text-[clamp(2.125rem,5vw,3.5rem)] font-extrabold leading-[1.1] tracking-tight text-cream-50">
+              Ремонт стиральных машин на дому
+            </h1>
+
+            <p className="mt-5 max-w-[44ch] text-base leading-relaxed text-fog-300 sm:text-lg">
+              Диагностика в день обращения. Точная смета до начала работ. Гарантия на ремонт.
+            </p>
+
+            <ul className="mt-6 space-y-2.5">
+              {[
+                "Приедем в удобное вам время",
+                "Стоимость согласуем до начала работ",
+                "Работаем без выходных с 9:00 до 21:00",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2.5 text-sm text-fog-300">
+                  <span className="font-bold text-copper-600">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Button href="/contacts">Вызвать мастера</Button>
+              <a
+                href={PHONE_HREF}
+                className="text-sm font-semibold text-fog-300 transition hover:text-cream-50"
+              >
+                {PHONE_DISPLAY}
+              </a>
+            </div>
+          </div>
+
+          {/* Right — Form card */}
+          <div className="rounded-[24px] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.3)] lg:p-8">
+            <p className="text-base font-semibold text-forest-950">Оставить заявку</p>
+            <p className="mt-1 text-sm text-sage-600">Мастер перезвонит и уточнит детали</p>
+            <div className="mt-6">
+              <LeadForm />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Trust strip */}
+      <div className="border-b border-[rgba(20,33,27,0.06)] bg-linen-50">
+        <Container className="py-5 sm:py-6">
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {trustItems.map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-copper-600" />
+                <span className="text-sm font-medium text-forest-950">{item}</span>
+              </div>
             ))}
-          </ol>
-        </div>
-      </Section>
+          </div>
+        </Container>
+      </div>
 
       {/* Неисправности */}
       <Section>
         <Eyebrow>Неисправности</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">С какой проблемой обращаются</h2>
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">С какой проблемой обращаются</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {symptoms.map((s) => (
             <Link key={s.slug} href={`/symptoms/${s.slug}`} className="group">
-              <Card className="h-full transition group-hover:border-zinc-300 group-hover:shadow-md">
-                <h3 className="text-sm font-semibold text-zinc-950">{s.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-500">{s.intro}</p>
+              <Card className="h-full transition-shadow group-hover:shadow-[0_16px_40px_rgba(16,24,20,0.1)]">
+                <h3 className="text-sm font-semibold text-forest-950">{s.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-sage-600">{s.intro}</p>
               </Card>
             </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* Преимущества */}
+      <Section className="bg-linen-50">
+        <Eyebrow>Преимущества</Eyebrow>
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">Почему выбирают нас</h2>
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {advantages.map((item) => (
+            <div key={item.title}>
+              <p className="text-4xl font-extrabold tracking-tight text-copper-600/20">{item.num}</p>
+              <p className="mt-3 text-sm font-semibold text-forest-950">{item.title}</p>
+              <p className="mt-1.5 text-sm leading-6 text-sage-600">{item.desc}</p>
+            </div>
           ))}
         </div>
       </Section>
@@ -131,13 +162,13 @@ export default function HomePage() {
       {/* Бренды */}
       <Section>
         <Eyebrow>Бренды</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Ремонтируем стиральные машины</h2>
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">Ремонтируем стиральные машины</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {brands.map((b) => (
             <Link key={b.slug} href={`/brands/${b.slug}`} className="group">
-              <Card className="h-full transition group-hover:border-zinc-300 group-hover:shadow-md">
-                <h3 className="text-sm font-semibold text-zinc-950">{b.brand}</h3>
-                <ul className="mt-3 space-y-1 text-sm text-zinc-500">
+              <Card className="h-full transition-shadow group-hover:shadow-[0_16px_40px_rgba(16,24,20,0.1)]">
+                <h3 className="text-sm font-semibold text-forest-950">{b.brand}</h3>
+                <ul className="mt-3 space-y-1 text-sm text-sage-600">
                   {b.commonProblems.map((p) => (
                     <li key={p}>— {p}</li>
                   ))}
@@ -148,10 +179,33 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Как мы работаем */}
+      <Section className="bg-linen-50">
+        <Eyebrow>Процесс</Eyebrow>
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">Как мы работаем</h2>
+        <div className="relative mt-10">
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-4 top-4 hidden border-t border-dashed border-[rgba(20,33,27,0.15)] lg:block"
+          />
+          <ol className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, i) => (
+              <li key={step.title}>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-forest-950 text-xs font-semibold text-white ring-4 ring-linen-50">
+                  {i + 1}
+                </div>
+                <p className="mt-4 text-sm font-semibold text-forest-950">{step.title}</p>
+                <p className="mt-1.5 text-sm leading-6 text-sage-600">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Section>
+
       {/* Отзывы */}
-      <Section className="bg-zinc-50">
+      <Section>
         <Eyebrow>Отзывы</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Что говорят клиенты</h2>
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">Что говорят клиенты</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r) => (
             <Card key={r.name} className="flex flex-col justify-between">
@@ -161,11 +215,11 @@ export default function HomePage() {
                     <span key={i}>{star}</span>
                   ))}
                 </div>
-                <p className="mt-3 text-sm leading-6 text-zinc-500">{r.text}</p>
+                <p className="mt-3 text-sm leading-6 text-sage-600">{r.text}</p>
               </div>
-              <div className="mt-4 border-t border-zinc-100 pt-3">
-                <p className="text-sm font-semibold text-zinc-950">{r.name}</p>
-                <p className="mt-0.5 text-xs text-zinc-400">
+              <div className="mt-4 border-t border-[rgba(20,33,27,0.06)] pt-3">
+                <p className="text-sm font-semibold text-forest-950">{r.name}</p>
+                <p className="mt-0.5 text-xs text-fog-300">
                   {r.district} · {r.problem}
                 </p>
               </div>
@@ -175,14 +229,14 @@ export default function HomePage() {
       </Section>
 
       {/* FAQ */}
-      <Section>
+      <Section className="bg-linen-50">
         <Eyebrow>FAQ</Eyebrow>
-        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Частые вопросы</h2>
-        <dl className="mt-8 max-w-2xl divide-y divide-zinc-100">
+        <h2 className="mt-3 text-2xl font-bold text-forest-950 sm:text-3xl">Частые вопросы</h2>
+        <dl className="mt-8 max-w-2xl divide-y divide-[rgba(20,33,27,0.08)]">
           {commonFaq.slice(0, 3).map((item) => (
             <div key={item.question} className="py-5 first:pt-0 last:pb-0">
-              <dt className="text-sm font-semibold text-zinc-950">{item.question}</dt>
-              <dd className="mt-2 text-sm leading-6 text-zinc-500">{item.answer}</dd>
+              <dt className="text-sm font-semibold text-forest-950">{item.question}</dt>
+              <dd className="mt-2 text-sm leading-6 text-sage-600">{item.answer}</dd>
             </div>
           ))}
         </dl>
@@ -194,23 +248,25 @@ export default function HomePage() {
       </Section>
 
       {/* CTA */}
-      <Section className="bg-zinc-950">
-        <div className="max-w-xl">
-          <h2 className="text-2xl font-semibold text-white">Нужен мастер?</h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-400">
-            Оставьте заявку — мастер позвонит, уточнит неисправность и предложит удобное время.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button href="/contacts" variant="secondary">Вызвать мастера</Button>
-            <a
-              href={PHONE_HREF}
-              className="inline-flex min-h-11 items-center justify-center px-2 text-sm font-medium text-zinc-400 transition hover:text-white"
-            >
-              {PHONE_DISPLAY}
-            </a>
+      <section className="bg-forest-950">
+        <Container className="py-16 sm:py-20">
+          <div className="max-w-xl">
+            <h2 className="text-2xl font-extrabold text-cream-50 sm:text-3xl">Нужен мастер?</h2>
+            <p className="mt-4 text-base leading-relaxed text-fog-300">
+              Оставьте заявку — мастер позвонит, уточнит неисправность и предложит удобное время.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Button href="/contacts">Вызвать мастера</Button>
+              <a
+                href={PHONE_HREF}
+                className="text-sm font-semibold text-fog-300 transition hover:text-cream-50"
+              >
+                {PHONE_DISPLAY}
+              </a>
+            </div>
           </div>
-        </div>
-      </Section>
+        </Container>
+      </section>
     </>
   );
 }

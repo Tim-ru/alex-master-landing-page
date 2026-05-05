@@ -14,11 +14,12 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-[rgba(20,33,27,0.08)] bg-white/95 backdrop-blur-sm">
       <Container className="flex min-h-16 items-center justify-between gap-6">
         <Link
           href="/"
-          className="text-base font-semibold text-zinc-950"
+          className="text-base font-bold text-forest-950"
+          style={{ fontFamily: "var(--font-manrope, inherit)" }}
           onClick={() => setOpen(false)}
         >
           Alex Master
@@ -27,17 +28,24 @@ export function SiteHeader() {
         {/* Desktop nav */}
         <nav
           aria-label="Основная навигация"
-          className="hidden items-center gap-6 text-sm text-zinc-600 sm:flex"
+          className="hidden items-center gap-6 text-sm text-sage-600 sm:flex"
         >
           {mainNavigation.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-zinc-950">
+            <Link
+              key={item.href}
+              href={item.href}
+              className={
+                "transition hover:text-forest-950 " +
+                (pathname === item.href ? "font-semibold text-forest-950" : "")
+              }
+            >
               {item.label}
             </Link>
           ))}
           <a
             href={PHONE_HREF}
             onClick={() => analytics.phoneClick()}
-            className="font-medium text-zinc-950 transition hover:text-teal-700"
+            className="font-semibold text-forest-950 transition hover:text-copper-600"
           >
             {PHONE_DISPLAY}
           </a>
@@ -51,7 +59,7 @@ export function SiteHeader() {
           <a
             href={PHONE_HREF}
             onClick={() => analytics.phoneClick()}
-            className="text-sm font-medium text-zinc-950"
+            className="text-sm font-semibold text-forest-950"
           >
             {PHONE_DISPLAY}
           </a>
@@ -60,7 +68,7 @@ export function SiteHeader() {
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-zinc-600 transition hover:bg-zinc-100"
+            className="flex h-9 w-9 items-center justify-center rounded-md text-sage-600 transition hover:bg-linen-50"
           >
             {open ? (
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
@@ -89,7 +97,7 @@ export function SiteHeader() {
       <div
         className={
           "overflow-hidden bg-white transition-[max-height] duration-200 ease-out sm:hidden " +
-          (open ? "max-h-64 border-t border-zinc-100" : "max-h-0")
+          (open ? "max-h-64 border-t border-[rgba(20,33,27,0.06)]" : "max-h-0")
         }
       >
         <Container>
@@ -100,8 +108,8 @@ export function SiteHeader() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={
-                  "py-2.5 text-sm transition hover:text-zinc-950 " +
-                  (pathname === item.href ? "font-semibold text-zinc-950" : "text-zinc-600")
+                  "py-2.5 text-sm transition hover:text-forest-950 " +
+                  (pathname === item.href ? "font-semibold text-forest-950" : "text-sage-600")
                 }
               >
                 {item.label}

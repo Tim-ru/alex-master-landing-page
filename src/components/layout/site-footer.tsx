@@ -8,32 +8,75 @@ import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-zinc-200 bg-zinc-50">
-      <Container className="py-6 text-sm text-zinc-600">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-col gap-1">
-            <p className="font-semibold text-zinc-950">Alex Master</p>
+    <footer className="bg-forest-950">
+      <Container className="py-12 sm:py-16">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Brand */}
+          <div>
+            <p
+              className="text-base font-bold text-cream-50"
+              style={{ fontFamily: "var(--font-manrope, inherit)" }}
+            >
+              Alex Master
+            </p>
             <a
               href={PHONE_HREF}
               onClick={() => analytics.phoneClick()}
-              className="transition hover:text-zinc-950"
+              className="mt-3 block text-sm font-semibold text-fog-300 transition hover:text-cream-50"
             >
               {PHONE_DISPLAY}
             </a>
+            <p className="mt-3 text-sm leading-6 text-sage-600">
+              Санкт-Петербург и Ленинградская область
+            </p>
+            <p className="mt-0.5 text-sm text-sage-600">Ежедневно с 9:00 до 21:00</p>
           </div>
 
-          <nav aria-label="Навигация в футере" className="flex flex-wrap gap-x-5 gap-y-2">
-            {mainNavigation.map((item) => (
-              <Link key={item.href} href={item.href} className="transition hover:text-zinc-950">
-                {item.label}
-              </Link>
-            ))}
+          {/* Navigation */}
+          <nav aria-label="Навигация в футере">
+            <p className="text-xs font-semibold uppercase tracking-widest text-sage-600">
+              Навигация
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {mainNavigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-fog-300 transition hover:text-cream-50"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-sm text-fog-300 transition hover:text-cream-50"
+                >
+                  Политика конфиденциальности
+                </Link>
+              </li>
+            </ul>
           </nav>
+
+          {/* Service info */}
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-sage-600">
+              Ремонтируем
+            </p>
+            <p className="mt-4 text-sm leading-6 text-fog-300">
+              Стиральные машины всех популярных брендов: Samsung, LG, Bosch, Indesit, Whirlpool,
+              Electrolux и других.
+            </p>
+            <p className="mt-3 text-sm text-fog-300">
+              Ремонт на дому — без вывоза и лишних трат.
+            </p>
+          </div>
         </div>
 
-        <p className="mt-4 border-t border-zinc-200 pt-4 text-xs text-zinc-400">
+        <div className="mt-10 border-t border-[rgba(255,255,255,0.07)] pt-6 text-xs text-sage-600">
           © {new Date().getFullYear()} Alex Master
-        </p>
+        </div>
       </Container>
     </footer>
   );
