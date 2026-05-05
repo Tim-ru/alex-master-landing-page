@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/layout/container";
+import { Button } from "@/components/ui/button";
 import { mainNavigation } from "@/lib/navigation";
 import { analytics } from "@/lib/analytics";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
@@ -13,7 +14,7 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-zinc-200 bg-white/95">
+    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-sm">
       <Container className="flex min-h-16 items-center justify-between gap-6">
         <Link
           href="/"
@@ -40,6 +41,9 @@ export function SiteHeader() {
           >
             {PHONE_DISPLAY}
           </a>
+          <Button href="/contacts" className="min-h-9 px-4 text-xs">
+            Вызвать мастера
+          </Button>
         </nav>
 
         {/* Mobile: phone + hamburger */}
@@ -82,27 +86,30 @@ export function SiteHeader() {
       </Container>
 
       {/* Mobile dropdown */}
-      {open && (
-        <div className="border-t border-zinc-100 bg-white sm:hidden">
-          <Container>
-            <nav aria-label="Мобильная навигация" className="flex flex-col py-3">
-              {mainNavigation.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={
-                    "py-2.5 text-sm transition hover:text-zinc-950 " +
-                    (pathname === item.href ? "font-semibold text-zinc-950" : "text-zinc-600")
-                  }
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </Container>
-        </div>
-      )}
+      <div
+        className={
+          "overflow-hidden bg-white transition-[max-height] duration-200 ease-out sm:hidden " +
+          (open ? "max-h-64 border-t border-zinc-100" : "max-h-0")
+        }
+      >
+        <Container>
+          <nav aria-label="Мобильная навигация" className="flex flex-col py-3">
+            {mainNavigation.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className={
+                  "py-2.5 text-sm transition hover:text-zinc-950 " +
+                  (pathname === item.href ? "font-semibold text-zinc-950" : "text-zinc-600")
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </Container>
+      </div>
     </header>
   );
 }

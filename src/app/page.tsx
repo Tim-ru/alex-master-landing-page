@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { localBusinessSchema } from "@/lib/structured-data";
 import { brands, commonFaq, reviews, symptoms } from "@/content";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Ремонт стиральных машин на дому — Alex Master",
@@ -35,7 +36,11 @@ export default function HomePage() {
       {/* Hero */}
       <Section className="bg-zinc-50">
         <div className="max-w-2xl">
-          <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
+          <div className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-3 py-1 text-xs font-medium text-teal-700 ring-1 ring-inset ring-teal-600/10">
+            <span className="h-1.5 w-1.5 rounded-full bg-teal-500" aria-hidden="true" />
+            Принимаем заявки ежедневно с 9:00 до 21:00
+          </div>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
             Ремонт стиральных машин на дому
           </h1>
           <p className="mt-6 text-lg leading-8 text-zinc-500">
@@ -57,7 +62,7 @@ export default function HomePage() {
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {advantages.map((item) => (
             <div key={item.title}>
-              <p className="text-4xl font-bold tracking-tight text-teal-700/20">{item.num}</p>
+              <p className="text-4xl font-bold tracking-tight text-teal-600/30">{item.num}</p>
               <p className="mt-3 text-sm font-semibold text-zinc-950">{item.title}</p>
               <p className="mt-1.5 text-sm leading-6 text-zinc-500">{item.desc}</p>
             </div>
@@ -108,7 +113,14 @@ export default function HomePage() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r) => (
             <Card key={r.name} className="flex flex-col justify-between">
-              <p className="text-sm leading-6 text-zinc-500">{r.text}</p>
+              <div>
+                <div className="flex gap-0.5 text-amber-400" aria-label="5 звёзд">
+                  {"★★★★★".split("").map((star, i) => (
+                    <span key={i}>{star}</span>
+                  ))}
+                </div>
+                <p className="mt-3 text-sm leading-6 text-zinc-500">{r.text}</p>
+              </div>
               <div className="mt-4 border-t border-zinc-100 pt-3">
                 <p className="text-sm font-semibold text-zinc-950">{r.name}</p>
                 <p className="mt-0.5 text-xs text-zinc-400">
@@ -140,14 +152,20 @@ export default function HomePage() {
       </Section>
 
       {/* CTA */}
-      <Section className="bg-zinc-50">
+      <Section className="bg-zinc-950">
         <div className="max-w-xl">
-          <h2 className="text-2xl font-semibold text-zinc-950">Нужен мастер?</h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-500">
+          <h2 className="text-2xl font-semibold text-white">Нужен мастер?</h2>
+          <p className="mt-3 text-sm leading-6 text-zinc-400">
             Оставьте заявку — мастер позвонит, уточнит неисправность и предложит удобное время.
           </p>
-          <div className="mt-6">
-            <Button href="/contacts">Вызвать мастера</Button>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button href="/contacts" variant="secondary">Вызвать мастера</Button>
+            <a
+              href={PHONE_HREF}
+              className="inline-flex min-h-11 items-center justify-center px-2 text-sm font-medium text-zinc-400 transition hover:text-white"
+            >
+              {PHONE_DISPLAY}
+            </a>
           </div>
         </div>
       </Section>
