@@ -34,7 +34,7 @@ export default function HomePage() {
 
       {/* Hero */}
       <Section className="bg-zinc-50">
-        <div className="py-8 sm:py-14 max-w-2xl">
+        <div className="max-w-2xl">
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
             Ремонт стиральных машин на дому
           </h1>
