@@ -42,6 +42,24 @@ export default function HomePage() {
       </Section>
 
       <Section>
+        <Eyebrow>Преимущества</Eyebrow>
+        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Почему выбирают нас</h2>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { title: "Диагностика в день обращения", desc: "Приедем и проверим в удобное вам время" },
+            { title: "Смета до начала работ", desc: "Стоимость ремонта согласуется заранее" },
+            { title: "Гарантия на ремонт", desc: "Гарантируем результат на все виды работ" },
+            { title: "Работаем ежедневно", desc: "Без выходных, с 9:00 до 21:00" }
+          ].map((item) => (
+            <Card key={item.title}>
+              <p className="text-sm font-semibold text-zinc-950">{item.title}</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-600">{item.desc}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      <Section className="bg-zinc-50">
         <Eyebrow>Неисправности</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">С какой проблемой обращаются</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

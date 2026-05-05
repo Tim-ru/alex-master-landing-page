@@ -5,7 +5,7 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { getSymptomBySlug, symptoms } from "@/content";
-import { faqPageSchema } from "@/lib/structured-data";
+import { faqPageSchema, breadcrumbSchema } from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -37,6 +37,17 @@ export default async function SymptomPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(symptom.faq)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Главная", href: "/" },
+              { name: symptom.title, href: `/symptoms/${symptom.slug}` }
+            ])
+          )
+        }}
       />
       <Section className="bg-zinc-50">
         <div className="max-w-2xl">

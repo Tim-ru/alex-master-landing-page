@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { brands, errorCodes, getBrandBySlug } from "@/content";
-import { faqPageSchema } from "@/lib/structured-data";
+import { faqPageSchema, breadcrumbSchema } from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -40,6 +40,17 @@ export default async function BrandPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(brand.faq)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Главная", href: "/" },
+              { name: brand.brand, href: `/brands/${brand.slug}` }
+            ])
+          )
+        }}
       />
       <Section className="bg-zinc-50">
         <div className="max-w-2xl">

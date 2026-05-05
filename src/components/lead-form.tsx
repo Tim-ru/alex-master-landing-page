@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { leadSchema, type LeadFormValues } from "@/lib/lead-schema";
 import { submitLead } from "@/app/actions/submit-lead";
@@ -9,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { analytics } from "@/lib/analytics";
 
-export function LeadForm() {
+function LeadFormInner() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -24,7 +26,13 @@ export function LeadForm() {
 
   useEffect(() => {
     setValue("renderedAt", Date.now());
-  }, [setValue]);
+    setValue("pageUrl", window.location.href);
+    setValue("utmSource", searchParams.get("utm_source") ?? undefined);
+    setValue("utmMedium", searchParams.get("utm_medium") ?? undefined);
+    setValue("utmCampaign", searchParams.get("utm_campaign") ?? undefined);
+    setValue("utmContent", searchParams.get("utm_content") ?? undefined);
+    setValue("utmTerm", searchParams.get("utm_term") ?? undefined);
+  }, [setValue, searchParams]);
 
   async function onSubmit(values: LeadFormValues) {
     setStatus("loading");
@@ -60,6 +68,12 @@ export function LeadForm() {
         {...register("honeypot")}
       />
       <input type="hidden" {...register("renderedAt", { valueAsNumber: true })} />
+      <input type="hidden" {...register("pageUrl")} />
+      <input type="hidden" {...register("utmSource")} />
+      <input type="hidden" {...register("utmMedium")} />
+      <input type="hidden" {...register("utmCampaign")} />
+      <input type="hidden" {...register("utmContent")} />
+      <input type="hidden" {...register("utmTerm")} />
 
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-zinc-950">
@@ -122,5 +136,13 @@ export function LeadForm() {
         {status === "loading" ? "Отправляем..." : "Отправить заявку"}
       </button>
     </form>
+  );
+}
+
+export function LeadForm() {
+  return (
+    <Suspense fallback={null}>
+      <LeadFormInner />
+    </Suspense>
   );
 }

@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Container } from "@/components/layout/container";
 import { mainNavigation } from "@/lib/navigation";
+import { analytics } from "@/lib/analytics";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
 
 export function SiteFooter() {
@@ -10,7 +13,11 @@ export function SiteFooter() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-1">
             <p className="font-semibold text-zinc-950">Alex Master</p>
-            <a href={PHONE_HREF} className="transition hover:text-zinc-950">
+            <a
+              href={PHONE_HREF}
+              onClick={() => analytics.phoneClick()}
+              className="transition hover:text-zinc-950"
+            >
               {PHONE_DISPLAY}
             </a>
           </div>

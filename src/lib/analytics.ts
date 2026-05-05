@@ -20,5 +20,7 @@ function reachGoal(target: string) {
 
 export const analytics = {
   formSubmit: () => reachGoal("form_submit"),
-  phoneClick: () => reachGoal("phone_click")
+  phoneClick: () => reachGoal("phone_click"),
+  whatsappClick: () => reachGoal("whatsapp_click"),
+  telegramClick: () => reachGoal("telegram_click")
 };

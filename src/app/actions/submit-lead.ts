@@ -26,9 +26,20 @@ export async function submitLead(formData: unknown): Promise<SubmitLeadResult> {
     return { ok: false, error: "Проверьте заполнение формы." };
   }
 
-  const { name, phone, problem, honeypot, renderedAt } = parsed.data;
+  const {
+    name,
+    phone,
+    problem,
+    honeypot,
+    renderedAt,
+    pageUrl,
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    utmContent,
+    utmTerm
+  } = parsed.data;
 
-  // Silent rejection for bots
   if (honeypot) {
     return { ok: true };
   }
@@ -39,18 +50,24 @@ export async function submitLead(formData: unknown): Promise<SubmitLeadResult> {
 
   const submittedAt = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
 
+  const utmParts = [utmSource, utmMedium, utmCampaign, utmContent, utmTerm]
+    .filter(Boolean)
+    .join(" / ");
+
   const lines = [
     "📋 <b>Новая заявка</b>",
     `👤 ${name}`,
     `📞 ${phone}`,
     problem ? `💬 ${problem}` : null,
+    pageUrl ? `🔗 ${pageUrl}` : null,
+    utmParts ? `📣 ${utmParts}` : null,
     `🕐 ${submittedAt}`
   ].filter(Boolean);
 
   try {
     await sendToTelegram(lines.join("\n"));
-  } catch {
-    console.error("Telegram send failed");
+  } catch (err) {
+    console.error("Telegram send failed:", err);
   }
 
   return { ok: true };

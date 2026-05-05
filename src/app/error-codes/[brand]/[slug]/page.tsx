@@ -5,6 +5,7 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { errorCodes, getBrandBySlug, getErrorCodeByBrandAndSlug } from "@/content";
+import { breadcrumbSchema } from "@/lib/structured-data";
 
 type Props = {
   params: Promise<{ brand: string; slug: string }>;
@@ -35,6 +36,18 @@ export default async function ErrorCodePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: "Главная", href: "/" },
+              ...(brand ? [{ name: brand.brand, href: `/brands/${brandSlug}` }] : []),
+              { name: errorCode.code, href: `/error-codes/${brandSlug}/${errorCode.slug}` }
+            ])
+          )
+        }}
+      />
       <Section className="bg-zinc-50">
         <div className="max-w-2xl">
           <Eyebrow>

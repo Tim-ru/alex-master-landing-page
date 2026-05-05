@@ -9,7 +9,13 @@ export const leadSchema = z.object({
     .regex(/^[\d\s\+\-\(\)]+$/, "Только цифры и символы +, -, (, )"),
   problem: z.string().max(300).optional(),
   honeypot: z.string().max(0).optional(),
-  renderedAt: z.number().optional()
+  renderedAt: z.number().optional(),
+  pageUrl: z.string().max(500).optional(),
+  utmSource: z.string().max(100).optional(),
+  utmMedium: z.string().max(100).optional(),
+  utmCampaign: z.string().max(100).optional(),
+  utmContent: z.string().max(100).optional(),
+  utmTerm: z.string().max(100).optional()
 });
 
 export type LeadFormValues = z.infer<typeof leadSchema>;
