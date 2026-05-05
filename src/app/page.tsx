@@ -25,6 +25,25 @@ const advantages = [
   { num: "04", title: "Работаем ежедневно", desc: "Без выходных, с 9:00 до 21:00" }
 ];
 
+const steps = [
+  {
+    title: "Звонок или заявка",
+    desc: "Опишите неисправность по телефону или через форму — согласуем удобное время выезда."
+  },
+  {
+    title: "Выезд мастера",
+    desc: "Приедем в назначенное время с инструментом и запчастями для распространённых поломок."
+  },
+  {
+    title: "Диагностика и смета",
+    desc: "Определим причину поломки и назовём точную стоимость до начала работ."
+  },
+  {
+    title: "Ремонт и гарантия",
+    desc: "Устраним неисправность и выдадим гарантию на все выполненные работы."
+  }
+];
+
 export default function HomePage() {
   return (
     <>
@@ -70,8 +89,31 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Неисправности */}
+      {/* Как мы работаем */}
       <Section className="bg-zinc-50">
+        <Eyebrow>Процесс</Eyebrow>
+        <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Как мы работаем</h2>
+        <div className="relative mt-10">
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-4 top-4 hidden border-t border-dashed border-zinc-300 lg:block"
+          />
+          <ol className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, i) => (
+              <li key={step.title}>
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-950 text-xs font-semibold text-white ring-4 ring-zinc-50">
+                  {i + 1}
+                </div>
+                <p className="mt-4 text-sm font-semibold text-zinc-950">{step.title}</p>
+                <p className="mt-1.5 text-sm leading-6 text-zinc-500">{step.desc}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Section>
+
+      {/* Неисправности */}
+      <Section>
         <Eyebrow>Неисправности</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">С какой проблемой обращаются</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
