@@ -5,6 +5,6 @@ type CardProps = ComponentPropsWithoutRef<"div">;
 
 export function Card({ className, ...props }: CardProps) {
   return (
-    <div className={cn("rounded-md border border-zinc-200 bg-white p-5", className)} {...props} />
+    <div className={cn("rounded-lg border border-zinc-200 bg-white p-5 shadow-sm", className)} {...props} />
   );
 }

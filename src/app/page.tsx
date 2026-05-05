@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { localBusinessSchema } from "@/lib/structured-data";
+import { brands, commonFaq, reviews, symptoms } from "@/content";
 
 export const metadata: Metadata = {
   title: "Ремонт стиральных машин на дому — Alex Master",
@@ -15,7 +16,13 @@ export const metadata: Metadata = {
     description: "Диагностика в день обращения, точная смета до начала работ, гарантия на ремонт."
   }
 };
-import { brands, commonFaq, reviews, symptoms } from "@/content";
+
+const advantages = [
+  { num: "01", title: "Диагностика в день обращения", desc: "Приедем и проверим в удобное вам время" },
+  { num: "02", title: "Смета до начала работ", desc: "Стоимость ремонта согласуется заранее" },
+  { num: "03", title: "Гарантия на ремонт", desc: "Гарантируем результат на все виды работ" },
+  { num: "04", title: "Работаем ежедневно", desc: "Без выходных, с 9:00 до 21:00" }
+];
 
 export default function HomePage() {
   return (
@@ -24,12 +31,14 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema()) }}
       />
+
+      {/* Hero */}
       <Section className="bg-zinc-50">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
+        <div className="py-8 sm:py-14 max-w-2xl">
+          <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
             Ремонт стиральных машин на дому
           </h1>
-          <p className="mt-5 text-base leading-7 text-zinc-600">
+          <p className="mt-6 text-lg leading-8 text-zinc-500">
             Диагностика в день обращения, точная смета до начала работ, гарантия на ремонт.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -41,48 +50,47 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Преимущества */}
       <Section>
         <Eyebrow>Преимущества</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Почему выбирают нас</h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { title: "Диагностика в день обращения", desc: "Приедем и проверим в удобное вам время" },
-            { title: "Смета до начала работ", desc: "Стоимость ремонта согласуется заранее" },
-            { title: "Гарантия на ремонт", desc: "Гарантируем результат на все виды работ" },
-            { title: "Работаем ежедневно", desc: "Без выходных, с 9:00 до 21:00" }
-          ].map((item) => (
-            <Card key={item.title}>
-              <p className="text-sm font-semibold text-zinc-950">{item.title}</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-600">{item.desc}</p>
-            </Card>
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {advantages.map((item) => (
+            <div key={item.title}>
+              <p className="text-4xl font-bold tracking-tight text-teal-700/20">{item.num}</p>
+              <p className="mt-3 text-sm font-semibold text-zinc-950">{item.title}</p>
+              <p className="mt-1.5 text-sm leading-6 text-zinc-500">{item.desc}</p>
+            </div>
           ))}
         </div>
       </Section>
 
+      {/* Неисправности */}
       <Section className="bg-zinc-50">
         <Eyebrow>Неисправности</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">С какой проблемой обращаются</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {symptoms.map((s) => (
             <Link key={s.slug} href={`/symptoms/${s.slug}`} className="group">
-              <Card className="h-full transition group-hover:border-zinc-300">
-                <h3 className="text-base font-semibold text-zinc-950">{s.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-600">{s.intro}</p>
+              <Card className="h-full transition group-hover:border-zinc-300 group-hover:shadow-md">
+                <h3 className="text-sm font-semibold text-zinc-950">{s.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-zinc-500">{s.intro}</p>
               </Card>
             </Link>
           ))}
         </div>
       </Section>
 
-      <Section className="bg-zinc-50">
+      {/* Бренды */}
+      <Section>
         <Eyebrow>Бренды</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Ремонтируем стиральные машины</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {brands.map((b) => (
             <Link key={b.slug} href={`/brands/${b.slug}`} className="group">
-              <Card className="h-full transition group-hover:border-zinc-300">
-                <h3 className="text-base font-semibold text-zinc-950">{b.brand}</h3>
-                <ul className="mt-3 space-y-1 text-sm text-zinc-600">
+              <Card className="h-full transition group-hover:border-zinc-300 group-hover:shadow-md">
+                <h3 className="text-sm font-semibold text-zinc-950">{b.brand}</h3>
+                <ul className="mt-3 space-y-1 text-sm text-zinc-500">
                   {b.commonProblems.map((p) => (
                     <li key={p}>— {p}</li>
                   ))}
@@ -93,16 +101,17 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section>
+      {/* Отзывы */}
+      <Section className="bg-zinc-50">
         <Eyebrow>Отзывы</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Что говорят клиенты</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r) => (
-            <Card key={r.name}>
-              <p className="text-sm leading-6 text-zinc-600">{r.text}</p>
+            <Card key={r.name} className="flex flex-col justify-between">
+              <p className="text-sm leading-6 text-zinc-500">{r.text}</p>
               <div className="mt-4 border-t border-zinc-100 pt-3">
-                <p className="text-sm font-medium text-zinc-950">{r.name}</p>
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm font-semibold text-zinc-950">{r.name}</p>
+                <p className="mt-0.5 text-xs text-zinc-400">
                   {r.district} · {r.problem}
                 </p>
               </div>
@@ -111,14 +120,15 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="bg-zinc-50">
+      {/* FAQ */}
+      <Section>
         <Eyebrow>FAQ</Eyebrow>
         <h2 className="mt-3 text-2xl font-semibold text-zinc-950">Частые вопросы</h2>
-        <dl className="mt-8 max-w-2xl space-y-6">
+        <dl className="mt-8 max-w-2xl divide-y divide-zinc-100">
           {commonFaq.slice(0, 3).map((item) => (
-            <div key={item.question}>
+            <div key={item.question} className="py-5 first:pt-0 last:pb-0">
               <dt className="text-sm font-semibold text-zinc-950">{item.question}</dt>
-              <dd className="mt-2 text-sm leading-6 text-zinc-600">{item.answer}</dd>
+              <dd className="mt-2 text-sm leading-6 text-zinc-500">{item.answer}</dd>
             </div>
           ))}
         </dl>
@@ -129,10 +139,11 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section>
+      {/* CTA */}
+      <Section className="bg-zinc-50">
         <div className="max-w-xl">
           <h2 className="text-2xl font-semibold text-zinc-950">Нужен мастер?</h2>
-          <p className="mt-3 text-sm leading-6 text-zinc-600">
+          <p className="mt-3 text-sm leading-6 text-zinc-500">
             Оставьте заявку — мастер позвонит, уточнит неисправность и предложит удобное время.
           </p>
           <div className="mt-6">
