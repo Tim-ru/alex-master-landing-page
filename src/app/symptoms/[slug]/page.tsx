@@ -5,7 +5,8 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { getSymptomBySlug, symptoms } from "@/content";
-import { faqPageSchema, breadcrumbSchema } from "@/lib/structured-data";
+import { faqPageSchema, breadcrumbSchema, serviceSchema } from "@/lib/structured-data";
+import { canonical } from "@/lib/metadata";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const symptom = getSymptomBySlug(slug);
   if (!symptom) return {};
   return {
+    ...canonical(`/symptoms/${slug}`),
     title: symptom.metaTitle,
     description: symptom.metaDescription,
     openGraph: { title: symptom.metaTitle, description: symptom.metaDescription }
@@ -34,6 +36,12 @@ export default async function SymptomPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema(symptom.h1, symptom.intro, `/symptoms/${symptom.slug}`))
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(symptom.faq)) }}

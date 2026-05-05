@@ -6,11 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { LeadForm } from "@/components/lead-form";
-import { localBusinessSchema } from "@/lib/structured-data";
+import { localBusinessSchema, faqPageSchema } from "@/lib/structured-data";
+import { canonical } from "@/lib/metadata";
 import { brands, commonFaq, reviews, symptoms } from "@/content";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  ...canonical("/"),
   title: "Ремонт стиральных машин на дому — Alex Master",
   description:
     "Ремонт стиральных машин на дому в Санкт-Петербурге. Диагностика в день обращения, точная смета до начала работ, гарантия на ремонт.",
@@ -59,6 +61,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(commonFaq.slice(0, 3))) }}
       />
 
       {/* Hero */}

@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { LeadForm } from "@/components/lead-form";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/lib/constants";
+import { canonical } from "@/lib/metadata";
 
 export const metadata: Metadata = {
+  ...canonical("/contacts"),
   title: "Контакты — вызов мастера по ремонту стиральных машин",
   description:
     "Оставьте заявку или позвоните — мастер уточнит неисправность и предложит удобное время выезда."

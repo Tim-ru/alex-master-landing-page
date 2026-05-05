@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { commonFaq } from "@/content";
 import { faqPageSchema } from "@/lib/structured-data";
+import { canonical } from "@/lib/metadata";
 
 export const metadata: Metadata = {
+  ...canonical("/faq"),
   title: "Частые вопросы о ремонте стиральных машин",
   description:
     "Ответы на частые вопросы: сроки, стоимость, гарантия и порядок ремонта стиральных машин на дому."

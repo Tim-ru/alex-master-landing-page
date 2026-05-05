@@ -5,7 +5,8 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { errorCodes, getBrandBySlug, getErrorCodeByBrandAndSlug } from "@/content";
-import { breadcrumbSchema } from "@/lib/structured-data";
+import { breadcrumbSchema, serviceSchema } from "@/lib/structured-data";
+import { canonical } from "@/lib/metadata";
 
 type Props = {
   params: Promise<{ brand: string; slug: string }>;
@@ -16,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const errorCode = getErrorCodeByBrandAndSlug(brandSlug, slug);
   if (!errorCode) return {};
   return {
+    ...canonical(`/error-codes/${brandSlug}/${slug}`),
     title: errorCode.metaTitle,
     description: errorCode.metaDescription,
     openGraph: { title: errorCode.metaTitle, description: errorCode.metaDescription }
@@ -36,6 +38,18 @@ export default async function ErrorCodePage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            serviceSchema(
+              errorCode.h1,
+              errorCode.meaning,
+              `/error-codes/${brandSlug}/${errorCode.slug}`
+            )
+          )
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

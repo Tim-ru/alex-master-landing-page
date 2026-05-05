@@ -3,8 +3,10 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { prices } from "@/content";
+import { canonical } from "@/lib/metadata";
 
 export const metadata: Metadata = {
+  ...canonical("/prices"),
   title: "Цены на ремонт стиральных машин",
   description:
     "Ориентировочные цены на ремонт стиральных машин. Итоговая стоимость согласуется с вами до начала работ."

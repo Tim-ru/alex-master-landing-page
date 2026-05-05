@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { brands, errorCodes, getBrandBySlug } from "@/content";
-import { faqPageSchema, breadcrumbSchema } from "@/lib/structured-data";
+import { faqPageSchema, breadcrumbSchema, serviceSchema } from "@/lib/structured-data";
+import { canonical } from "@/lib/metadata";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const brand = getBrandBySlug(slug);
   if (!brand) return {};
   return {
+    ...canonical(`/brands/${slug}`),
     title: brand.metaTitle,
     description: brand.metaDescription,
     openGraph: { title: brand.metaTitle, description: brand.metaDescription }
@@ -37,6 +39,12 @@ export default async function BrandPage({ params }: Props) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema(brand.h1, brand.intro, `/brands/${brand.slug}`))
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(brand.faq)) }}

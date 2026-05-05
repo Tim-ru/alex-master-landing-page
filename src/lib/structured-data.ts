@@ -1,20 +1,29 @@
 import type { FAQItem } from "@/types/content";
+import { PHONE_HREF } from "@/lib/constants";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://alexmaster.ru";
 
-export function serviceSchema(name: string, description: string, url: string) {
+const PHONE = PHONE_HREF.replace("tel:", "");
+
+export function serviceSchema(name: string, description: string, path: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     name,
     description,
+    serviceType: "Ремонт стиральных машин",
     provider: {
       "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/#business`,
       name: "Alex Master",
+      telephone: PHONE,
       url: SITE_URL
     },
-    areaServed: "Санкт-Петербург",
-    url
+    areaServed: {
+      "@type": "City",
+      name: "Санкт-Петербург"
+    },
+    url: `${SITE_URL}${path}`
   };
 }
 
@@ -35,17 +44,33 @@ export function localBusinessSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#business`,
     name: "Alex Master",
     description: "Ремонт стиральных машин на дому в Санкт-Петербурге",
     url: SITE_URL,
-    telephone: "+7-921-123-45-67",
+    telephone: PHONE,
+    priceRange: "₽₽",
+    currenciesAccepted: "RUB",
+    paymentAccepted: "Наличные, банковская карта",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Санкт-Петербург",
+      addressRegion: "Санкт-Петербург",
       addressCountry: "RU"
     },
-    openingHours: "Mo-Su 09:00-21:00",
-    areaServed: "Санкт-Петербург и Ленинградская область"
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+      ],
+      opens: "09:00",
+      closes: "21:00"
+    },
+    areaServed: [
+      { "@type": "City", name: "Санкт-Петербург" },
+      { "@type": "AdministrativeArea", name: "Ленинградская область" }
+    ]
   };
 }
 
