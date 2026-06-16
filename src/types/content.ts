@@ -23,6 +23,8 @@ export type SymptomPage = {
   metaDescription: string;
   h1: string;
   intro: string;
+  image?: string;
+  imageAlt?: string;
   signs: string[];
   possibleCauses: string[];
   selfCheckSteps: string[];
