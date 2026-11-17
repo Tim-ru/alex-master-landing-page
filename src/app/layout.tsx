@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { AppShell } from "@/components/layout/app-shell";
 import { YandexMetrica } from "@/components/yandex-metrica";
 import "./globals.css";
@@ -47,6 +48,7 @@ export default function RootLayout({
     <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
       <AppShell>{children}</AppShell>
       <YandexMetrica />
+      <Analytics />
     </html>
   );
 }
